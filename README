@@ -1,0 +1,18 @@
+How to use:
+- Open the included Excel file named RMA Shipping.xlsm
+- Select an option in the dropbox
+- Fill the required columns
+- Click the "Ok" button when ready 
+- The last cell in the first column will be marked "Finished" when everything's complete
+
+Supported Feature:
+- Close an open RMA
+- Change status of opened RMA
+- Make requisition to restock unit for FA
+- Close and swap an open RMA
+- Create and serialize material
+- Change equipment serialization
+- Quick link to IW72
+- Print Spooler content
+
+http://github.com/akum/rma_shipping
