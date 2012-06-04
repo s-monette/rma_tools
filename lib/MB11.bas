@@ -27,10 +27,10 @@ Sub Config(ByVal mb11_mvt As String)
     
     'Destination hardcoded to Plant 1000, Sloc PL01
     Select Case mb11_mvt
-        Case "301" ' Mvt from plant to plant
+        Case "301" 'Mvt from plant to plant
             Session.findById("wnd[0]/usr/ctxtMSEGK-UMWRK").text = "1000"
             Session.findById("wnd[0]/usr/ctxtMSEGK-UMLGO").text = "PL01"
-        Case "302" ' Mvt from plant to plant (Reversal)
+        Case "302" 'Mvt from plant to plant (Reversal)
             Session.findById("wnd[0]/usr/ctxtMSEGK-UMWRK").text = "1000"
             Session.findById("wnd[0]/usr/ctxtMSEGK-UMLGO").text = "PL01"
     End Select
@@ -47,7 +47,7 @@ Sub Config(ByVal mb11_mvt As String)
     'Check if matarial is EOL, send press enter to confirm if so
     If (Session.findById("wnd[0]/sbar").text <> "") Then Sap.Enter
     
-    If batchout <> "" Or batch <> "" Then
+    If (batchout + batch) <> "" Then
         Session.findById("wnd[0]/usr/ctxtMSEG-CHARG").text = batch
         If batchout <> "" Then
             Session.findById("wnd[0]/usr/ctxtMSEG-UMCHA").text = batchout

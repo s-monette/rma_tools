@@ -28,10 +28,10 @@ End Sub
 Sub check_row()
     Excel_sheet.hook
     If ActiveWindow.ScrollRow < 5 Then
-        [A2] = "At first row"
+        Call data.write_cell(1, 2, "At first row")
         Call Color.Green(2, 1)
     Else
-        [A2] = "Not at first row"
+        Call data.write_cell(1, 2, "Not at first row")
         Call Color.Yellow(2, 1)
     End If
 End Sub
@@ -41,7 +41,7 @@ Sub check_version()
     If Dir(ThisWorkbook.Path & "\.git\") <> "" Then
         sFile = ThisWorkbook.Path & "\.git\refs\heads\master"
         Open sFile For Input As FreeFile
-           sString = Input$(LOF(1), 1)
+            sString = Input$(LOF(1), 1)
         Close
         gitHash = Left(sString, Len(sString) - 1)
         currentHash = ThisWorkbook.BuiltinDocumentProperties("Comments").Value
