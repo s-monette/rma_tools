@@ -8,11 +8,12 @@ Sub Enter()
     IW72.Config
     Sap.Execute
     
+    On Error Resume Next
+        Session.findById("wnd[1]/tbar[0]/btn[0]").press
+    On Error GoTo 0
+    
     'Check if function is currently locked
     While (Session.findById("wnd[0]/titl").text = "Change Order: Initial Screen")
-        On Error Resume Next
-            Session.findById("wnd[1]/tbar[0]/btn[0]").press
-        On Error GoTo 0
         Session.findById("wnd[1]/usr/btnSPOP-OPTION2").press
         Sap.Execute
     Wend
