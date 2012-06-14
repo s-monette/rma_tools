@@ -10,6 +10,9 @@ Sub Enter()
     
     'Check if function is currently locked
     While (Session.findById("wnd[0]/titl").text = "Change Order: Initial Screen")
+        On Error Resume Next
+            Session.findById("wnd[1]/tbar[0]/btn[0]").press
+        On Error GoTo 0
         Session.findById("wnd[1]/usr/btnSPOP-OPTION2").press
         Sap.Execute
     Wend
@@ -244,13 +247,14 @@ Sub get_in_out()
         Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/subSUB_KOPF:SAPLCOIH:1102/btn%#AUTOTEXT001").press
         If in_out = "in" Then
             Session.findById("wnd[1]/usr/sub:SAPLBSVA:0201[0]/radJ_STMAINT-ANWS[3,0]").Select
+            Session.findById("wnd[1]/tbar[0]/btn[0]").press 'Confirm status menu
             Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB/ssubSUB_AUFTRAG:SAPLCOMK:3020/tblSAPLCOMKTCTRL_3020/txtRESBD-MENGE[4,12]").text = "1"
         Else 'Out
             Session.findById("wnd[1]/usr/sub:SAPLBSVA:0201[0]/radJ_STMAINT-ANWS[4,0]").Select
+            Session.findById("wnd[1]/tbar[0]/btn[0]").press 'Confirm status menu
             Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB/ssubSUB_AUFTRAG:SAPLCOMK:3020/tblSAPLCOMKTCTRL_3020/txtRESBD-MENGE[4,12]").text = "-1"
         End If
-
-        Session.findById("wnd[1]/tbar[0]/btn[0]").press 'Confirm status menu
+       
         Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB").Select
         Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB/ssubSUB_AUFTRAG:SAPLCOMK:3020/tblSAPLCOMKTCTRL_3020/ctxtRESBD-MATNR[1,12]").text = part
         Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB/ssubSUB_AUFTRAG:SAPLCOMK:3020/tblSAPLCOMKTCTRL_3020/ctxtRESBD-LGORT[8,12]").text = "0001"
