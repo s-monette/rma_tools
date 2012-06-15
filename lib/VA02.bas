@@ -69,6 +69,8 @@ Sub partout()
     Session.findById("wnd[1]/usr/btnBT_SSEA").press
     Session.findById("wnd[1]/tbar[0]/btn[5]").press
     Sap.Back
-    Session.findById("wnd[1]/tbar[0]/btn[0]").press
+    On Error Resume Next
+        Session.findById("wnd[1]/tbar[0]/btn[0]").press
+    On Error GoTo 0
     Sap.Save
 End Sub
