@@ -34,6 +34,7 @@ Sub dropBox()
         .AddItem "TECO"
         .AddItem "Create Material"
         .AddItem "Change Serial"
+        .AddItem "Print, MB11 and TECO"
         .ListIndex = 0
     End With
 End Sub
@@ -72,6 +73,8 @@ Sub switch_case(step, action As String)
             Template.create_material (step)
         Case "Change Serial"
             Template.change_serial (step)
+        Case "Print, MB11 and TECO"
+            Template.mb11_teco (step)
     End Select
 End Sub
 
@@ -223,6 +226,29 @@ Sub teco(ByVal action As String)
             IW72.Enter
             IW72.Read_only
             IW42.teco
+    End Select
+End Sub
+
+Sub mb11_teco(ByVal action As String)
+    Select Case action
+        Case "GUI"
+            Call Template.frame(3, 1, 21, "Serial")
+        Case "read"
+            serials = objSheet.Cells(i, 1).Value
+        Case "execute"
+            IW72.Read_only
+            IW72.Goto_object
+            IW72.Printer
+            If IW72.partout = "" Then
+                MB11.Config ("343")
+                IW42.teco
+            Else
+                MB11.Config ("555")
+                IQ08.partout
+                MB11.Config ("501")
+                IW42.teco
+                VA02.partout
+            End If
     End Select
 End Sub
 
