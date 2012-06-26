@@ -162,7 +162,7 @@ Sub Status()
     End If
     
     'Check if something is to be done in second half sub status update
-    If (cellL + cellM + cellN + cellO + cellP) <> "" Then
+    If (cellL & cellM & cellN & cellO & cellP) <> "" Then
         Session.findById("wnd[1]/usr/btnODOWN").press 'Press down on menu
        
         If cellL = "a" Then 'Activate PO status

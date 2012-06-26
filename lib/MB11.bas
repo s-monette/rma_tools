@@ -47,7 +47,7 @@ Sub Config(ByVal mb11_mvt As String)
     'Check if matarial is EOL, send press enter to confirm if so
     If (Session.findById("wnd[0]/sbar").text <> "") Then Sap.Enter
     
-    If (batchout + batch) <> "" Then
+    If (batchout & batch) <> "" Then
         Session.findById("wnd[0]/usr/ctxtMSEG-CHARG").text = batch
         If batchout <> "" Then
             Session.findById("wnd[0]/usr/ctxtMSEG-UMCHA").text = batchout

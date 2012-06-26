@@ -13,7 +13,7 @@ Sub create()
         Exit Sub
     Else
         Session.findById("wnd[0]/tbar[1]/btn[41]").press
-        If (manuf_name + manuf_part) <> 0 Then
+        If (manuf_name & manuf_part) <> 0 Then
             Session.findById("wnd[0]/usr/tabsTABSTRIP/tabpT\01").Select
             Session.findById("wnd[0]/usr/tabsTABSTRIP/tabpT\01/ssubSUB_DATA:SAPLITO0:0102/subSUB_0102C:SAPLITO0:1022/txtITOB-HERST").text = manuf_name
             Session.findById("wnd[0]/usr/tabsTABSTRIP/tabpT\01/ssubSUB_DATA:SAPLITO0:0102/subSUB_0102C:SAPLITO0:1022/txtITOB-MAPAR").text = manuf_part
