@@ -27,6 +27,7 @@ Sub dropBox()
         .Clear
         .ListFillRange = ""
         .AddItem "Close RMA"
+        .AddItem "Close Restock"
         .AddItem "Mass Status Maintenance"
         .AddItem "Req"
         .AddItem "Req556"
@@ -35,7 +36,6 @@ Sub dropBox()
         .AddItem "Create Material"
         .AddItem "Change Serial"
         .AddItem "Print, MB11 and TECO"
-        .AddItem "Close Restock"
         .ListIndex = 0
     End With
 End Sub
@@ -60,6 +60,8 @@ Sub switch_case(step, action As String)
     Select Case action
         Case "Close RMA"
             Template.Close_RMA (step)
+        Case "Close Restock"
+            Template.restock (step)
         Case "Mass Status Maintenance"
             Template.mass_status_maintenance (step)
         Case "Swap"
@@ -76,8 +78,6 @@ Sub switch_case(step, action As String)
             Template.change_serial (step)
         Case "Print, MB11 and TECO"
             Template.mb11_teco (step)
-        Case "Close Restock"
-            Template.iw72_out (step)
     End Select
 End Sub
 
@@ -288,7 +288,7 @@ Sub change_serial(ByVal action As String)
     End Select
 End Sub
 
-Sub iw72_out(ByVal action As String)
+Sub restock(ByVal action As String)
     Select Case action
         Case "GUI"
             Template.Close_RMA ("GUI")
