@@ -35,7 +35,7 @@ Sub dropBox()
         .AddItem "Create Material"
         .AddItem "Change Serial"
         .AddItem "Print, MB11 and TECO"
-        .AddItem "IW72, outbound delivery"
+        .AddItem "Close Restock"
         .ListIndex = 0
     End With
 End Sub
@@ -76,7 +76,7 @@ Sub switch_case(step, action As String)
             Template.change_serial (step)
         Case "Print, MB11 and TECO"
             Template.mb11_teco (step)
-        Case "IW72, outbound delivery"
+        Case "Close Restock"
             Template.iw72_out (step)
     End Select
 End Sub
@@ -297,6 +297,6 @@ Sub iw72_out(ByVal action As String)
         Case "execute"
             IW72.Full_run
             IW42.teco
-            VA02.remove_block
+            VA02.outbound
     End Select
 End Sub

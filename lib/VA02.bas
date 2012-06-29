@@ -52,6 +52,7 @@ Sub partout()
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_POPO").press
     Session.findById("wnd[1]/usr/txtRV45A-POSNR").text = Item
     Session.findById("wnd[1]/tbar[0]/btn[0]").press
+    
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/tblSAPMV45ATCTRL_U_ERF_AUFTRAG/txtVBAP-ZZTIMER_TWO[0,0]").SetFocus
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_PREP").press
     Session.findById("wnd[1]/tbar[0]/btn[0]").press
@@ -77,35 +78,24 @@ Sub outbound()
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_POPO").press
     Session.findById("wnd[1]/usr/txtRV45A-POSNR").text = Item
     Session.findById("wnd[1]/tbar[0]/btn[0]").press
-    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/tblSAPMV45ATCTRL_U_ERF_AUFTRAG/ctxtVBAP-ZZSERNR_RMA[7,0]").SetFocus
-    Session.findById("wnd[0]").sendVKey 2
-    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\05").Select
+    
+    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/tblSAPMV45ATCTRL_U_ERF_AUFTRAG/txtVBAP-ZZTIMER_TWO[0,0]").SetFocus
+    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_PREP").press
+    Session.findById("wnd[1]/tbar[0]/btn[0]").press
 
     'Confirm outbound line
-    Session.findById("wnd[1]/tbar[0]/btn[0]").press
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\05/ssubSUBSCREEN_BODY:SAPLV46R:4100/tblSAPLV46RTCTRL_REPPO/chkV46R_ITEM-VORGA_VAL_103[1,0]").Selected = True
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\05/ssubSUBSCREEN_BODY:SAPLV46R:4100/tblSAPLV46RTCTRL_REPPO/txtV46R_ITEM-MENGE[0,0]").text = "1"
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\05/ssubSUBSCREEN_BODY:SAPLV46R:4100/tblSAPLV46RTCTRL_REPPO/chkV46R_ITEM-VORGA_VAL_103[1,0]").SetFocus
     Session.findById("wnd[0]").sendVKey 0
     Session.findById("wnd[1]/tbar[0]/btn[0]").press
 
-    Session.findById("wnd[0]/tbar[0]/btn[3]").press
-    Sap.Save
-End Sub
-
-Sub remove_block()
-    VA02.check_enter
-        
-    'Enter in RMA item
-    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_POPO").press
-    Session.findById("wnd[1]/usr/txtRV45A-POSNR").text = Item
-    Session.findById("wnd[1]/tbar[0]/btn[0]").press
-    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_ITEM").press
-    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\04").Select
+    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\04").Select
     
     'Remove billing and Billing date
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\04/ssubSUBSCREEN_BODY:SAPMV45A:4453/cmbVBAP-FAKSP").Key = " "
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\04/ssubSUBSCREEN_BODY:SAPMV45A:4453/ctxtVBKD-FKDAT").text = Year(Now) & "/" & Month(Now) & "/" & Day(Now)
-    
     Sap.Save
 End Sub
+
+
