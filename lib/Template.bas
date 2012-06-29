@@ -35,6 +35,7 @@ Sub dropBox()
         .AddItem "Create Material"
         .AddItem "Change Serial"
         .AddItem "Print, MB11 and TECO"
+        .AddItem "IW72, outbound delivery"
         .ListIndex = 0
     End With
 End Sub
@@ -75,6 +76,8 @@ Sub switch_case(step, action As String)
             Template.change_serial (step)
         Case "Print, MB11 and TECO"
             Template.mb11_teco (step)
+        Case "IW72, outbound delivery"
+            Template.iw72_out (step)
     End Select
 End Sub
 
@@ -223,7 +226,6 @@ Sub teco(ByVal action As String)
         Case "read"
             serials = objSheet.Cells(i, 1).Value
         Case "execute"
-            IW72.Enter
             IW72.Read_only
             IW42.teco
     End Select
@@ -283,5 +285,18 @@ Sub change_serial(ByVal action As String)
             assy_serial = objSheet.Cells(i, 2).Value
         Case "execute"
             IQ08.change
+    End Select
+End Sub
+
+Sub iw72_out(ByVal action As String)
+    Select Case action
+        Case "GUI"
+            Template.Close_RMA ("GUI")
+        Case "read"
+            Template.Close_RMA ("read")
+        Case "execute"
+            IW72.Full_run
+            IW42.teco
+            'VA02.outbound
     End Select
 End Sub

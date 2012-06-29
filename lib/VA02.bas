@@ -74,3 +74,36 @@ Sub partout()
     On Error GoTo 0
     Sap.Save
 End Sub
+
+Sub outbound()
+    Sap.Go "va02"
+
+    'Copy Title of VA02 transaction for error handling loop
+    Title = Session.findById("/app/con[0]/ses[0]/wnd[0]/titl").text
+    Session.findById("wnd[0]/usr/ctxtVBAK-VBELN").text = rma
+    Session.findById("wnd[0]").sendVKey 0
+    
+    'Error handling for Sales Order is still under process
+    'Will stay in loop as long as it is not able to enter in the service order.
+    While Session.findById("/app/con[0]/ses[0]/wnd[0]/titl").text = Title
+        Session.findById("wnd[0]").sendVKey 0
+    Wend
+    ' Enter in RMA item
+    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_POPO").press
+    Session.findById("wnd[1]/usr/txtRV45A-POSNR").text = Item
+    Session.findById("wnd[1]/tbar[0]/btn[0]").press
+    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/tblSAPMV45ATCTRL_U_ERF_AUFTRAG/ctxtVBAP-ZZSERNR_RMA[7,0]").SetFocus
+    Session.findById("wnd[0]").sendVKey 2
+    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\05").Select
+
+    ' Confirm outbound line
+    Session.findById("wnd[1]/tbar[0]/btn[0]").press
+    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\05/ssubSUBSCREEN_BODY:SAPLV46R:4100/tblSAPLV46RTCTRL_REPPO/chkV46R_ITEM-VORGA_VAL_103[1,0]").Selected = True
+    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\05/ssubSUBSCREEN_BODY:SAPLV46R:4100/tblSAPLV46RTCTRL_REPPO/txtV46R_ITEM-MENGE[0,0]").text = "1"
+    Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\05/ssubSUBSCREEN_BODY:SAPLV46R:4100/tblSAPLV46RTCTRL_REPPO/chkV46R_ITEM-VORGA_VAL_103[1,0]").SetFocus
+    Session.findById("wnd[0]").sendVKey 0
+    Session.findById("wnd[1]/tbar[0]/btn[0]").press
+
+    Session.findById("wnd[0]/tbar[0]/btn[3]").press
+    Session.findById("wnd[0]/tbar[0]/btn[11]").press ' Save button Pressed
+End Sub
