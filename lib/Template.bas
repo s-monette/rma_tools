@@ -295,8 +295,8 @@ Sub iw72_out(ByVal action As String)
         Case "read"
             Template.Close_RMA ("read")
         Case "execute"
-            IW72.Full_run
-            IW42.teco
-            'VA02.outbound
+            IW72.Read_only
+            'IW42.teco
+            VA02.remove_block
     End Select
 End Sub
