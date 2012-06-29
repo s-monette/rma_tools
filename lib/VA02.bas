@@ -98,7 +98,7 @@ Sub remove_block()
         
     'Enter in RMA item
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_POPO").press
-    Session.findById("wnd[1]/usr/txtRV45A-POSNR").text = ItemCurrent
+    Session.findById("wnd[1]/usr/txtRV45A-POSNR").text = Item
     Session.findById("wnd[1]/tbar[0]/btn[0]").press
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_ITEM").press
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\04").Select
