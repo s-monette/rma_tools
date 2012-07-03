@@ -48,6 +48,8 @@ Sub check_version()
         currentRev = ThisWorkbook.BuiltinDocumentProperties("Revision number").Value
         If currentHash <> gitHash Then
             ThisWorkbook.BuiltinDocumentProperties("Revision number") = currentRev + 1
+            Open ThisWorkbook.Path & "\version" For Output As #1
+            Print #1, currentRev + 1
             ThisWorkbook.BuiltinDocumentProperties("Comments") = gitHash
         End If
     End If

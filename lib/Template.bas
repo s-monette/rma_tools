@@ -20,9 +20,11 @@ Sub excel(action As String)
         Rows("2:3").Borders(itt).LineStyle = xlNone
     Next
     Call Template.switch_case("GUI", action)
+    Application.ScreenUpdating = True
 End Sub
 
 Sub dropBox()
+    Worksheets("Shipping").lblVersion.Caption = "V1." & ThisWorkbook.BuiltinDocumentProperties("Revision number").Value
     With Worksheets("Shipping").cmbInput
         .Clear
         .ListFillRange = ""
