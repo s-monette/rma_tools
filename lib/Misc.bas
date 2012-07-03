@@ -48,7 +48,7 @@ Sub check_version()
         currentRev = ThisWorkbook.BuiltinDocumentProperties("Revision number").Value
         If currentHash <> gitHash Then
             ThisWorkbook.BuiltinDocumentProperties("Revision number") = currentRev + 1
-            fileVersion = ThisWorkbook.Path & "\version"
+            fileVersion = ThisWorkbook.Path & "\version.rev"
             fnum = FreeFile()
             Open fileVersion For Output As fnum
             Write #fnum, currentRev + 1
