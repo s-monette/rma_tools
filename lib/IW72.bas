@@ -110,7 +110,7 @@ End Sub
 
 Sub Status()
     'Append new text to RMA long text if needed
-    If logs <> "" Then IW72.set_service_order
+    IW72.set_service_order
     
     'Open user status menu
     Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/btn%#AUTOTEXT001").press
@@ -202,10 +202,12 @@ Sub Status()
 End Sub
 
 Sub set_service_order()
-    'Save old repair log text
-    text_buffer = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/subSUB_TEXT:SAPLCOIH:1103/cntlLTEXT/shell").text
-    'Write comments+ old buffer
-    Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/subSUB_TEXT:SAPLCOIH:1103/cntlLTEXT/shell").text = logs + vbCr + text_buffer
+    If text_buffer <> "" Then
+        'Save old repair log text
+        text_buffer = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/subSUB_TEXT:SAPLCOIH:1103/cntlLTEXT/shell").text
+        'Write comments+ old buffer
+        Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/subSUB_TEXT:SAPLCOIH:1103/cntlLTEXT/shell").text = logs + vbCr + text_buffer
+    End If
 End Sub
 
 Sub Serial_batch()
@@ -244,6 +246,7 @@ End Sub
 
 Sub get_in_out()
     If sloc <> "PL01" Then
+        Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB").Select
         'Set status
         Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/subSUB_KOPF:SAPLCOIH:1102/btn%#AUTOTEXT001").press
         If in_out = "in" Then
@@ -262,11 +265,19 @@ Sub get_in_out()
         Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB/ssubSUB_AUFTRAG:SAPLCOMK:3020/tblSAPLCOMKTCTRL_3020/ctxtRESBD-WERKS[9,12]").text = "1000"
         Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB/ssubSUB_AUFTRAG:SAPLCOMK:3020/tblSAPLCOMKTCTRL_3020/txtRESBD-VORNR[10,12]").text = "20"
         Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB/ssubSUB_AUFTRAG:SAPLCOMK:3020/tblSAPLCOMKTCTRL_3020/btnLTICON-LTOPR[3,12]").press
-        data.clipboard (serial)
-        Session.findById("wnd[0]/tbar[1]/btn[9]").press
-        Session.findById("wnd[0]/tbar[0]/btn[3]").press
-        Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB/ssubSUB_AUFTRAG:SAPLCOMK:3020/tblSAPLCOMKTCTRL_3020/txtRESBD-POSNR[0,12]").SetFocus
-        Session.findById("wnd[0]").sendVKey 2
+        
+        Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpMUEB/ssubSUB_AUFTRAG:SAPLCOMK:3020/btnBTN_MKAG").press
+        Session.findById("wnd[0]/tbar[1]/btn[39]").press
+        Do While exitflag = 0
+            exitflag = 1
+            buff_bart = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1300/subSUB_KMP:SAPLCOMD:3001/ctxtRESBD-MATNR").text
+            qty = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1300/tabsTS_1300/tabpMKAG/ssubSUB_KMP_DETAIL:SAPLCOMD:3100/txtRESBD-MENGE").text
+            If (part <> buff_bart) Or (in_out = "in" And qty = "1-") Then
+                Session.findById("wnd[0]/tbar[1]/btn[39]").press
+                exitflag = 0
+            End If
+        Loop
+        Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1300/subSUB_KMP:SAPLCOMD:3001/txtRESBD-POTX1").text = serial
         req_num = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1300/tabsTS_1300/tabpMKAG/ssubSUB_KMP_DETAIL:SAPLCOMD:3100/txtRESBD-RSNUM").text
     End If
 End Sub
