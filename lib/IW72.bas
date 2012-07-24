@@ -202,7 +202,7 @@ Sub Status()
 End Sub
 
 Sub set_service_order()
-    If text_buffer <> "" Then
+    If logs <> "" Then
         'Save old repair log text
         text_buffer = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/subSUB_TEXT:SAPLCOIH:1103/cntlLTEXT/shell").text
         'Write comments+ old buffer
