@@ -290,6 +290,15 @@ Sub Full_run()
     IW72.Printer
 End Sub
 
+Sub No_print()
+    IW72.Enter
+    IW72.Info
+    IW72.get_batch
+    IW72.repair_log
+    Sap.Back
+    Sap.Save
+End Sub
+
 Sub Read_only()
     IW72.Enter
     IW72.Info

@@ -297,7 +297,7 @@ Sub restock(ByVal action As String)
         Case "read"
             Template.Close_RMA ("read")
         Case "execute"
-            IW72.Full_run
+            IW72.No_print
             IW42.teco
             VA02.outbound
     End Select
