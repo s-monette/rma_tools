@@ -38,6 +38,7 @@ Sub dropBox()
         .AddItem "Create Material"
         .AddItem "Change Serial"
         .AddItem "Print, MB11 and TECO"
+        .AddItem "From 343 to PL01"
         .ListIndex = 0
     End With
 End Sub
@@ -80,6 +81,8 @@ Sub switch_case(step, action As String)
             Template.change_serial (step)
         Case "Print, MB11 and TECO"
             Template.mb11_teco (step)
+        Case "From 343 to PL01"
+            Template.send_PL01 (step)
     End Select
 End Sub
 
@@ -300,5 +303,19 @@ Sub restock(ByVal action As String)
             IW72.No_print
             IW42.teco
             VA02.outbound
+    End Select
+End Sub
+
+Sub send_PL01(ByVal action As String)
+    Select Case action
+        Case "GUI"
+            Call Template.frame(3, 1, 21, "Serial")
+        Case "read"
+            serials = objSheet.Cells(i, 1).Value
+        Case "execute"
+            IW72.Read_only
+            MB11.Config ("343")
+            MB11.Config ("301")
+            MB11.Config ("411")
     End Select
 End Sub
