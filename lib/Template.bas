@@ -187,7 +187,7 @@ Sub req(ByVal action As String)
             IW72.req_in_out
             If in_out = "in" Then
                 Misc.Zkciresrep
-            ElseIf sloc <> "PL01" Then
+            ElseIf IW72.sloc <> "PL01" Then
                 Call MB11.Config("555")
                 Misc.Zkciresrep
             End If

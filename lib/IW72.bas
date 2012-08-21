@@ -1,5 +1,5 @@
 Attribute VB_Name = "IW72"
-Public req_num, in_out, Order, rma, part, Item, serial, partout, batchout, batch As String
+Public req_num, in_out, Order, rma, part, Item, serial, partout, batchout, batch, sloc As String
 
 Sub Enter()
     'Enter the transaction
@@ -231,7 +231,7 @@ Sub get_stock_status()
     Session.findById("wnd[0]").sendVKey 2
     sloc = Session.findById("wnd[0]/usr/tabsTABSTRIP/tabpT\06/ssubSUB_DATA:SAPLITO0:0122/subSUB_0122C:SAPLITO0:1220/ctxtEQBS-B_LAGER").text
     If sloc = "PL01" Then
-        MsgBox "Board is in PL01, no need for us to make any reservation or movement." + vbCr + "The one wanting the board must create his 901 and 902 in the Plant 1000 Sloc Pl01"
+        Call data.write_cell(i, 2, "Board is in PL01, no need for us to make any reservation or movement." + vbCr + "The one wanting the board must create his 901 and 902 in the Plant 1000 Sloc Pl01")
         in_out = "out"
     Else
         in_out = Session.findById("wnd[0]/usr/tabsTABSTRIP/tabpT\06/ssubSUB_DATA:SAPLITO0:0122/subSUB_0122C:SAPLITO0:1220/ctxtEQBS-B_WERK").text
