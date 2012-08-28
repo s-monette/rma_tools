@@ -1,5 +1,5 @@
 Attribute VB_Name = "IW72"
-Public req_num, in_out, Order, rma, part, Item, serial, partout, batchout, batch, sloc As String
+Public req_num, in_out, Order, rma, part, Item, serial, partout, batchout, batch, sloc, rmaType, PL01_MB11 As String
 
 Sub Enter()
     'Enter the transaction
@@ -43,6 +43,7 @@ Sub Info()
     rma = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/tabsTS_1100/tabpIHKZ/ssubSUB_AUFTRAG:SAPLCOIH:1120/subSUB_SERVICE:SAPLCOI3:0700/subSUB01:SAPLCOI3:0601/txtCAUFVD-RMANR").text
     part = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/tabsTS_1100/tabpIHKZ/ssubSUB_AUFTRAG:SAPLCOIH:1120/subSUB_SERVICE:SAPLCOI3:0700/subSUB01:SAPLCOI3:0601/ctxtCAUFVD-MATNR").text
     Item = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/tabsTS_1100/tabpIHKZ/ssubSUB_AUFTRAG:SAPLCOIH:1120/subSUB_SERVICE:SAPLCOI3:0700/subSUB01:SAPLCOI3:0601/txtCAUFVD-POSNV_RMA").text
+    rmaType = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/tabsTS_1100/tabpIHKZ/ssubSUB_AUFTRAG:SAPLCOIH:1120/subSUB_SERVICE:SAPLCOI3:0700/subSUB01:SAPLCOI3:0601/ctxtPMSDO-MATNR").text
 End Sub
 
 Sub Goto_object()
@@ -59,6 +60,10 @@ Sub get_batch()
     Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpIOLU/ssubSUB_AUFTRAG:SAPLIWOL:0300/tblSAPLIWOLOBJK_120/ctxtRIWOL-SERNR[2,0]").SetFocus
     Session.findById("wnd[0]").sendVKey 2
     batch = Session.findById("wnd[0]/usr/tabsTABSTRIP/tabpT\06/ssubSUB_DATA:SAPLITO0:0122/subSUB_0122C:SAPLITO0:1220/ctxtITOB-CHARGE").text
+    
+    sloc = Session.findById("wnd[0]/usr/tabsTABSTRIP/tabpT\06/ssubSUB_DATA:SAPLITO0:0122/subSUB_0122C:SAPLITO0:1220/ctxtEQBS-B_LAGER").text
+    If (rmaType = "RESOCK" And sloc <> "PL01") Then PL01_MB11 = 1
+    
     Sap.Back
     Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpIOLU/ssubSUB_AUFTRAG:SAPLIWOL:0300/tblSAPLIWOLOBJK_120/btnRIWOL0-IMELD[10,0]").SetFocus
     Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1101/tabsTS_1100/tabpIOLU/ssubSUB_AUFTRAG:SAPLIWOL:0300/tblSAPLIWOLOBJK_120/btnRIWOL0-IMELD[10,0]").press

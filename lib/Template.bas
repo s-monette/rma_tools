@@ -39,6 +39,7 @@ Sub dropBox()
         .AddItem "Change Serial"
         .AddItem "Print, MB11 and TECO"
         .AddItem "From 343 to PL01"
+        .AddItem "SCRAP"
         .ListIndex = 0
     End With
 End Sub
@@ -83,6 +84,8 @@ Sub switch_case(step, action As String)
             Template.mb11_teco (step)
         Case "From 343 to PL01"
             Template.send_PL01 (step)
+        Case "SCRAP"
+            Template.scrap (step)
     End Select
 End Sub
 
@@ -113,17 +116,34 @@ Sub Close_RMA(ByVal action As String)
             code3 = objSheet.Cells(i, 9).Value
             logs = objSheet.Cells(i, 10).Value
         Case "execute"
-            IW72.Full_run
-            If IW72.partout = "" Then
-                MB11.Config ("343")
-                IW42.teco
-            Else
-                MB11.Config ("555")
-                IQ08.partout
-                MB11.Config ("501")
-                IW42.teco
-                VA02.partout
-            End If
+            IW72.Enter
+            IW72.Info
+            IW72.get_batch
+            IW72.repair_log
+            Select Case rmaType
+                Case "REPAIR"
+                    IW72.Printer
+                    If IW72.partout = "" Then
+                        MB11.Config ("343")
+                        IW42.teco
+                    Else
+                        MB11.Config ("555")
+                        IQ08.partout
+                        MB11.Config ("501")
+                        IW42.teco
+                        VA02.partout
+                    End If
+                Case "RESTOCK"
+                    Sap.Back
+                    Sap.Save
+                    If IW72.PL01_MB11 = "1" Then
+                        MB11.Config ("343")
+                        MB11.Config ("301")
+                        MB11.Config ("411")
+                    End If
+                    IW42.teco
+                    VA02.outbound
+        End Select
     End Select
 End Sub
 
@@ -317,5 +337,18 @@ Sub send_PL01(ByVal action As String)
             MB11.Config ("343")
             MB11.Config ("301")
             MB11.Config ("411")
+    End Select
+End Sub
+
+Sub scrap(ByVal action As String)
+    Select Case action
+        Case "GUI"
+            Template.Close_RMA ("GUI")
+        Case "read"
+            Template.Close_RMA ("read")
+        Case "execute"
+            IW72.No_print
+            MB11.Config ("343")
+            IW42.teco
     End Select
 End Sub
