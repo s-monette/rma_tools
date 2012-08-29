@@ -1,16 +1,16 @@
 Attribute VB_Name = "Sap"
 Public Session As Object
 
-Function hook() As Object
-On Error GoTo ErrorHandler ' Start SAP and login if it's not already running
+Sub hook()
+On Error GoTo ErrorHandler 'Start SAP and login if it's not already running
     Set SapGuiAuto = GetObject("SAPGUI")
     Set SapApp = SapGuiAuto.GetScriptingEngine
     Set SapConnection = SapApp.Children(0)
     Set Session = SapConnection.Children(0)
-Exit Function
+Exit Sub
 ErrorHandler:
     Call Sap.Login
-End Function
+End Sub
 
 Sub Login()
     Set wshShell = CreateObject("WScript.Shell")

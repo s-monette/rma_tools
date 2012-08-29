@@ -1,5 +1,6 @@
 Attribute VB_Name = "IW72"
-Public req_num, in_out, Order, rma, part, Item, serial, partout, batchout, batch, sloc, rmaType, PL01_MB11 As String
+Public req_num, in_out, Order, rma, part, Item, serial, partout, batchout, _
+batch, sloc, rmaType, PL01_MB11 As String
 
 Sub Enter()
     'Enter the transaction
@@ -81,7 +82,7 @@ Sub repair_log()
     While (flag_next = 1)
         Color.Yellow (i)
         'Get data from Excel to variables for the current iteration
-        data.Read
+        Call Template.switch_case("read", Worksheets("Shipping").cmbInput.text)
         'Fill catalogues info
         Session.findById("wnd[0]/usr/tabsTAB_GROUP_10/tabp10\TAB01/ssubSUB_GROUP_10:SAPLIQS0:7235/subCUSTOM_SCREEN:SAPLIQS0:7212/subSUBSCREEN_3:SAPLIQS0:7324/ctxtVIQMFE-FECOD").text = kpi
         Session.findById("wnd[0]/usr/tabsTAB_GROUP_10/tabp10\TAB01/ssubSUB_GROUP_10:SAPLIQS0:7235/subCUSTOM_SCREEN:SAPLIQS0:7212/subSUBSCREEN_3:SAPLIQS0:7324/txtVIQMFE-FETXT").text = text
@@ -210,7 +211,7 @@ Sub set_service_order()
     If logs <> "" Then
         'Save old repair log text
         text_buffer = Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/subSUB_TEXT:SAPLCOIH:1103/cntlLTEXT/shell").text
-        'Write comments+ old buffer
+        'Write comments + old buffer
         Session.findById("wnd[0]/usr/subSUB_ALL:SAPLCOIH:3001/ssubSUB_LEVEL:SAPLCOIH:1100/subSUB_KOPF:SAPLCOIH:1102/subSUB_TEXT:SAPLCOIH:1103/cntlLTEXT/shell").text = logs + vbCr + text_buffer
     End If
 End Sub
@@ -287,19 +288,20 @@ Sub get_in_out()
     End If
 End Sub
 
-Sub Full_run()
+Sub Standard_run()
     IW72.Enter
     IW72.Info
     IW72.get_batch
     IW72.repair_log
+End Sub
+
+Sub Full_run()
+    IW72.Standard_run
     IW72.Printer
 End Sub
 
 Sub No_print()
-    IW72.Enter
-    IW72.Info
-    IW72.get_batch
-    IW72.repair_log
+    IW72.Standard_run
     Sap.Back
     Sap.Save
 End Sub

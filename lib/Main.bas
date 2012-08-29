@@ -12,7 +12,7 @@ Sub multi(action As String)
     
     For i = 4 To objSheet.UsedRange.Rows.Count
         Call Color.Yellow(i)
-        data.Read
+        Call Template.switch_case("read", action)
         Call Template.switch_case("execute", action)
         Call Color.Green(i)
         Excel_sheet.Scan_end

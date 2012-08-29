@@ -5,7 +5,7 @@ Public serials, partouts, batchouts, kpi, text, mrp, code1, code2, code3, _
 Public cellA, cellB, cellC, cellD, cellE, cellF, cellG, cellH, cellI, cellJ, _
     cellK, cellL, cellM, cellN, cellO, cellP, cellQ As String
 
-Sub excel(action As String)
+Sub excel(action As String) 'Refresh Excel layout when inputbox is modified
     Excel_sheet.hook
     Application.ScreenUpdating = False
     
@@ -29,7 +29,6 @@ Sub dropBox()
         .Clear
         .ListFillRange = ""
         .AddItem "Close RMA"
-        .AddItem "Close Restock"
         .AddItem "Mass Status Maintenance"
         .AddItem "Req"
         .AddItem "Req556"
@@ -64,8 +63,6 @@ Sub switch_case(step, action As String)
     Select Case action
         Case "Close RMA"
             Template.Close_RMA (step)
-        Case "Close Restock"
-            Template.restock (step)
         Case "Mass Status Maintenance"
             Template.mass_status_maintenance (step)
         Case "Swap"
@@ -116,10 +113,7 @@ Sub Close_RMA(ByVal action As String)
             code3 = objSheet.Cells(i, 9).Value
             logs = objSheet.Cells(i, 10).Value
         Case "execute"
-            IW72.Enter
-            IW72.Info
-            IW72.get_batch
-            IW72.repair_log
+            IW72.Standard_run
             Select Case rmaType
                 Case "REPAIR"
                     IW72.Printer
@@ -223,7 +217,6 @@ Sub req556(ByVal action As String)
             serials = objSheet.Cells(i, 1).Value
             logs = objSheet.Cells(i, 2).Value
         Case "execute"
-            IW72.Enter
             IW72.Read_only
             Call MB11.Config("556")
     End Select

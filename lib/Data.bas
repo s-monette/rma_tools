@@ -1,9 +1,4 @@
 Attribute VB_Name = "Data"
-Sub Read()
-    'Get data from Excel to variables
-    Call Template.switch_case("read", Worksheets("Shipping").cmbInput.text)
-End Sub
-
 Sub write_cell(ByVal x, ByVal y As Integer, inputStr As String)
     objSheet.Cells(y, x).Value = inputStr
 End Sub
