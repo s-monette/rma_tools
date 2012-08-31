@@ -87,13 +87,11 @@ Sub outbound()
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\05/ssubSUBSCREEN_BODY:SAPLV46R:4100/tblSAPLV46RTCTRL_REPPO/chkV46R_ITEM-VORGA_VAL_103[1,0]").Selected = True
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\05/ssubSUBSCREEN_BODY:SAPLV46R:4100/tblSAPLV46RTCTRL_REPPO/txtV46R_ITEM-MENGE[0,0]").text = "1"
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\05/ssubSUBSCREEN_BODY:SAPLV46R:4100/tblSAPLV46RTCTRL_REPPO/chkV46R_ITEM-VORGA_VAL_103[1,0]").SetFocus
-    Sap.Enter
+    Sap.Enter 'Confirm pop-up box
     Session.findById("wnd[1]/tbar[0]/btn[0]").press
-    Sap.Back
-    
+   
     'Set billing date to current day
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP/tabpT\04").Select
-    'Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\04/ssubSUBSCREEN_BODY:SAPMV45A:4453/cmbVBAP-FAKSP").Key = " "
     Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\04/ssubSUBSCREEN_BODY:SAPMV45A:4453/ctxtVBKD-FKDAT").text = Year(Now) & "/" & Month(Now) & "/" & Day(Now)
     
     Sap.Save
