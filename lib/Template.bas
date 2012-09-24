@@ -340,8 +340,8 @@ Sub scrap(ByVal action As String)
         Case "read"
             Template.Close_RMA ("read")
         Case "execute"
-            IW72.No_print
-            MB11.Config ("343")
+            IW72.Full_run
+            MB11.Config ("555")
             IW42.teco
     End Select
 End Sub
