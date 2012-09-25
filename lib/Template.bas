@@ -10,7 +10,8 @@ Sub excel(action As String) 'Refresh Excel layout when inputbox is modified
     Application.ScreenUpdating = False
     
     'Clear Rows 2-3
-    Worksheets("Shipping").chkStock.Visible = False
+    Worksheets("Shipping").lblSLoc.Visible = False
+    Worksheets("Shipping").txtSLoc.Visible = False
     Rows("2:3").ClearContents
     Rows("2:3").UnMerge
     Color.Reset
@@ -225,7 +226,8 @@ End Sub
 Sub swap(ByVal action As String)
     Select Case action
         Case "GUI"
-            Worksheets("Shipping").chkStock.Visible = True
+            Worksheets("Shipping").lblSLoc.Visible = True
+            Worksheets("Shipping").txtSLoc.Visible = True
             Template.Close_RMA ("GUI")
         Case "read"
             Template.Close_RMA ("read")

@@ -31,7 +31,7 @@ Sub swap()
     Session.findById("wnd[0]/tbar[1]/btn[35]").press
     'Session.findById("wnd[0]/usr/btnBUT2").press
     
-    If Worksheets("Shipping").chkStock.Value = True Then 'Set the swap in location 0015
+    If Worksheets("Shipping").txtSLoc.text = True Then 'Set the swap in location 0015
         Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_MKAL").press
         Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_MKLO").press
         Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_POPO").press
