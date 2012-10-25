@@ -31,7 +31,9 @@ Sub swap()
     Session.findById("wnd[0]/tbar[1]/btn[35]").press
     'Session.findById("wnd[0]/usr/btnBUT2").press
     
-    If Worksheets("Shipping").txtSLoc.text = True Then 'Set the swap in location 0015
+    
+    If Worksheets("Shipping").txtSLoc.text <> "0001" Then 'Set the swap location
+        Session.findById("wnd[0]/tbar[1]/btn[18]").press
         Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_MKAL").press
         Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_MKLO").press
         Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4054/btnBT_POPO").press
@@ -40,9 +42,10 @@ Sub swap()
         Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\01/ssubSUBSCREEN_BODY:SAPMV45A:4400/subSUBSCREEN_TC:SAPMV45A:4900/tblSAPMV45ATCTRL_U_ERF_AUFTRAG/txtVBAP-POSNR[4,3]").SetFocus
         Session.findById("wnd[0]/mbar/menu[2]/menu[2]/menu[2]").Select
         Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\03").Select
-        Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\03/ssubSUBSCREEN_BODY:SAPMV45A:4452/ctxtVBAP-LGORT").text = "0015"
+        Session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\03/ssubSUBSCREEN_BODY:SAPMV45A:4452/ctxtVBAP-LGORT").text = Worksheets("Shipping").txtSLoc.text
         Sap.Back
     End If
+    MsgBox "check"
     Sap.Save
 End Sub
 
